@@ -5,6 +5,10 @@ import path from 'path';
 
 export const listarDocumentos = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     const sql = `SELECT 
     d.id_documentos,
     d.nombre AS nombre_documento,
@@ -306,6 +310,10 @@ export const actalizardocumentosVersion = async (req, res) => {
 
 export const buscarDocumentos = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     let sql = "SELECT * FROM documentos WHERE id_documentos = ?";
     const id = req.params.id;
     const [documentoRows] = await conexion.query(sql, id);
@@ -498,6 +506,10 @@ export const Actualizar = async (req, res) => {
 
 export const consultaGrafica = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
 
     let sql = `
 SELECT 
