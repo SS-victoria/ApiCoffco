@@ -1,7 +1,11 @@
 import { conexion } from "../database/conexion.js";
-
+import { validationResult } from "express-validator";
 export const listaIngresoTrilla = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     // Consulta SQL para obtener el reporte junto con las rutas de los logos asignados al documento
     let sql = `
     SELECT 
@@ -61,6 +65,10 @@ export const listaIngresoTrilla = async (req, res) => {
 
 export const obtenerInformacionServicio = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     // Obtener los parámetros del cuerpo de la solicitud
     const { idTipoServicio, fechaInicio, fechaFin } = req.body;
 

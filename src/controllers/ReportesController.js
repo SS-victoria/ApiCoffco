@@ -1,10 +1,14 @@
 import { conexion } from "../database/conexion.js";
-
+import { validationResult } from "express-validator";
 
 export const Reportes = async (req, res) => {
     const {muestra, TipoServicio}= req.body;
     console.log(req.body)
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         let sql = `SELECT 
     ts.nombreServicio,
     d.nombre AS nombre_documento,

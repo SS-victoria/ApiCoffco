@@ -383,7 +383,6 @@ export const MuestrasTerminadas = async (req,res ) => {
     `;
 
     const [responde] = await conexion.query(sql);
-
     if (responde.length > 0) {
       const formatearResponde = responde.map((muestra) => ({
         id_muestra: muestra.id_muestra,
@@ -391,7 +390,7 @@ export const MuestrasTerminadas = async (req,res ) => {
         cantidadEntrada: parseFloat(muestra.cantidadEntrada),
         fecha_muestra: muestra.fecha_muestra.toISOString().split('T')[0],
         estado: muestra.estado,
-        finca: muestra.finca,
+        finca: muestra.nombre_finca,
         usuario: muestra.nombre_usuario,
         altura: parseFloat(muestra.altura),
         variedad: muestra.variedad,

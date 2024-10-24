@@ -1,7 +1,12 @@
+import { validationResult } from "express-validator";
 import { conexion } from "../database/conexion.js";
 
 export const getAlquiler = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     let sql = `SELECT 
     s.id_servicios,
     ts.nombreServicio AS tipo_servicio,
@@ -39,6 +44,10 @@ ORDER BY
 
 export const usuariosParaAlquiler = async (req,res)=>{
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     let sql = `SELECT 
     u.id_usuario,
     CONCAT(u.nombre,' ', u.apellidos) AS nombre_completo_usuario,
@@ -71,6 +80,10 @@ if(respuesta.length>0){
 
 export const registrarAlquiler = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     const { fecha, fk_idAmbiente, fk_idUsuarios, fecha_fin } = req.body;
 
     // Obtener la fecha actual
@@ -148,6 +161,10 @@ export const registrarAlquiler = async (req, res) => {
 
 export const actualizarAlquiler = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     const { id } = req.params; 
     const { fecha, fk_idAmbiente, fk_idUsuarios, fecha_fin } = req.body;
 
@@ -207,6 +224,10 @@ export const actualizarAlquiler = async (req, res) => {
 
 export const eliminarAlquiler = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     let id = req.params.id;
     let sql = `DELETE FROM servicios WHERE id_servicios = ?`;
     const [respuesta] = await conexion.query(sql, [id]);

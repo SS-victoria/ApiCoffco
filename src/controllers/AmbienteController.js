@@ -4,6 +4,10 @@ import { conexion } from "../database/conexion.js";
 
 export const ListarAmbientes = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     const sql = "select * from ambiente";
     const [result] = await conexion.query(sql);
     if (result.length > 0) {
@@ -18,6 +22,10 @@ export const ListarAmbientes = async (req, res) => {
 };
 export const ListarAmbientesId = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     const id = req.params.id;
     const sql = "select * from ambiente where idAmbiente=?";
     const [result] = await conexion.query(sql, [id]);
@@ -33,10 +41,10 @@ export const ListarAmbientesId = async (req, res) => {
 
 export const CrearAmbiente = async (req, res) => {
   try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-          return res.status(400).json({ errors: errors.array() });
-      }
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
 
       const { nombre_ambiente } = req.body;
 
@@ -56,6 +64,10 @@ export const CrearAmbiente = async (req, res) => {
 };
 export const ActualizarAmbiente = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     let { nombre_ambiente, estado } = req.body;
     let id = req.params.id;
     let sql ="UPDATE ambiente SET nombre_ambiente =? ,estado=? WHERE idAmbiente =?";
@@ -72,6 +84,10 @@ export const ActualizarAmbiente = async (req, res) => {
 
 export const EliminarAmbiente = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     const id = req.params.id;
     const sql = "DELETE FROM ambiente WHERE idAmbiente =?";
     const [result] = await conexion.query(sql, [id]);

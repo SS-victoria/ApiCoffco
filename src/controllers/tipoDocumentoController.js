@@ -3,6 +3,10 @@ import { validationResult } from "express-validator";
 
 export const listarTipoDocumento = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         let sql = "SELECT * FROM tipodocumento";
         const [respuesta] = await conexion.query(sql);
         if (respuesta.length > 0) {
@@ -18,6 +22,7 @@ export const listarTipoDocumento = async (req, res) => {
 export const registrarTipoDocumento = async (req, res) => {
     /* 	nombreDocumento	TipoDocumento	estado */
     try {
+        
         const error = validationResult(req);
         if (!error.isEmpty()) {
             return res.status(400).json(error);
@@ -39,6 +44,10 @@ export const registrarTipoDocumento = async (req, res) => {
 export const actualizarTipoDocumento = async (req, res) => {
 
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         let { nombreDocumento } = req.body;
         let id = req.params.id;
         let sql = `UPDATE tipodocumento SET nombreDocumento = ? WHERE idTipoDocumento = ?`;
@@ -56,6 +65,10 @@ export const actualizarTipoDocumento = async (req, res) => {
 
 export const eliminarTipoDocumento = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         let id = req.params.id;
         let sql = `DELETE FROM tipodocumento WHERE idTipoDocumento = ?`;
         const [respuesta] = await conexion.query(sql, [id]);
@@ -71,6 +84,10 @@ export const eliminarTipoDocumento = async (req, res) => {
 
 export const listarIdTipoDocumento = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         let id = req.params.id;
         let sql = `SELECT * FROM tipodocumento WHERE idTipoDocumento = ?`;
         const [respuesta] = await conexion.query(sql, [id]);
@@ -88,6 +105,10 @@ export const listarIdTipoDocumento = async (req, res) => {
 
 export const actualizarEstadoTipoDocumento = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         let { estado } = req.body;
         let id = req.params.id;
 
@@ -110,6 +131,10 @@ export const actualizarEstadoTipoDocumento = async (req, res) => {
 export const listarActivo = async (req, res) => {
 
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         let sql = `SELECT * FROM tipodocumento WHERE estado = 'activo'`;
         const [respuesta] = await conexion.query(sql);
         if (respuesta.length > 0) {

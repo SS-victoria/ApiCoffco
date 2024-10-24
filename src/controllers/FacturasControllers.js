@@ -3,6 +3,10 @@ import { validationResult } from "express-validator";
 
 export const generarFacturas = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         const { codigo } = req.body;
         let sql = `SELECT 
     m.codigo_muestra,

@@ -5,11 +5,10 @@ import { validationResult } from "express-validator"
 export const registrartiposervicio = async (req, res) => {
     try {
         // Validar los datos
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
         }
-
         // Obtener el nombre del servicio del cuerpo de la solicitud
         const { nombreServicio, codigoTipoServicio } = req.body;
 
@@ -33,6 +32,10 @@ export const registrartiposervicio = async (req, res) => {
 // Listar Todos los Servicios Detalle
 export const listartiposervicio = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         const sql = `SELECT * FROM tiposervicio `;
         const [result] = await conexion.query(sql);
 
@@ -49,6 +52,10 @@ export const listartiposervicio = async (req, res) => {
 // Listar Servicio Detalle por ID
 export const listartiposervicioId = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         const id = req.params.id;
         const sql = `SELECT * FROM tiposervicio WHERE idTipoServicio = ?`;
         const [result] = await conexion.query(sql, [id]);
@@ -66,13 +73,17 @@ export const listartiposervicioId = async (req, res) => {
 // Actualizar Servicio Detalle
 export const actualizartiposervicio = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         const { nombreServicio, codigoTipoServicio } = req.body;
         const id = req.params.id;
 
         console.log(`Actualizando tipo de servicio con ID: ${id}, nombre: ${nombreServicio} y código: ${codigoTipoServicio}`);
 
         // Consulta SQL para actualizar el tipo de servicio
-        const sql = `UPDATE tipoServicio SET nombreServicio = ?, codigoTipoServicio = ? WHERE idTipoServicio = ?`;
+        const sql = `UPDATE tiposervicio SET nombreServicio = ?, codigoTipoServicio = ? WHERE idTipoServicio = ?`;
 
         // Ejecutar la consulta
         const [result] = await conexion.query(sql, [nombreServicio, codigoTipoServicio, id]);
@@ -91,6 +102,10 @@ export const actualizartiposervicio = async (req, res) => {
 // Eliminar Servicio Detalle
 export const eliminartiposervicio = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         const id = req.params.id;
         const sql = `DELETE FROM tiposervicio WHERE idTipoServicio = ?`;
         const [result] = await conexion.query(sql, [id]);
@@ -109,6 +124,10 @@ export const eliminartiposervicio = async (req, res) => {
 // Actualizar Estado de Servicio Detalle
 export const actualizarestadoservicio = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         const { estado } = req.body;
         const id = req.params.id;
 
@@ -138,6 +157,10 @@ export const actualizarestadoservicio = async (req, res) => {
 };
 export const ValidarServiciodeDocumento = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         const { idTipoServicio } = req.body;
         let sql = `
            SELECT 
@@ -171,6 +194,10 @@ AND
 }
 export const listartiposervcioActivo = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         const sql = `SELECT * FROM tiposervicio where estado = 'activo' `;
         const [result] = await conexion.query(sql);
 
@@ -189,6 +216,10 @@ export const listartiposervcioActivo = async (req, res) => {
 // Listar Tipos de Servicio con Documento Activo
 export const listarTiposServicioConDocumentoActivo = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         // Consulta SQL que selecciona los tipos de servicio con al menos un documento activo
         const sql = `
             SELECT DISTINCT ts.idTipoServicio,  ts.nombreServicio

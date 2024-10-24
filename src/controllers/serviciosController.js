@@ -5,7 +5,10 @@ import { validationResult } from "express-validator";
 export const getVariables = async (req, res) => {
   try {
 
-    
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
 
 
     const { id_muestra } = req.body;
@@ -152,6 +155,10 @@ export const getMuestrasParaServicios = async (req, res) => {
 
 export const getPreciosSegunTipoServicio = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     const { id_muestra } = req.body;
 
     // Verifica si id_muestra está presente
@@ -336,6 +343,10 @@ export const registrarServicio = async (req, res) => {
 // registra los datos al terminar el servicio
 export const registroServicioTerminado = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     let id = req.params.id;
     let { cantidad_salida, fecha_fin } = req.body;
     console.log(cantidad_salida);
@@ -380,6 +391,10 @@ export const registroServicioTerminado = async (req, res) => {
 //lista los servicios en la tabla
 export const listarServicios = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     let sql = `SELECT 
     s.id_servicios,
     ts.nombreServicio as tipo_servicio,
@@ -421,6 +436,10 @@ JOIN
 //
 export const listarServiciosId = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     let id = req.params.id;
     let sql = `SELECT * FROM servicios WHERE id_servicios = ?`;
     const [respuesta] = await conexion.query(sql, [id]);
@@ -437,6 +456,10 @@ export const listarServiciosId = async (req, res) => {
 //actualiza un servicio con sus valores
 export const editarValoresPorServicio = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     const { id_servicios, valoresVariables } = req.body;
 
     // Verificación de campos obligatorios

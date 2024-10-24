@@ -4,6 +4,10 @@ import { validationResult } from "express-validator";
 // Listar todos los precios
 export const listarPrecios = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     let sql = `SELECT
       p.idPrecio,
       p.estado_precio,
@@ -34,6 +38,10 @@ export const listarPrecios = async (req, res) => {
 // Registrar un nuevo precio
 export const registrarPrecio = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     // Validar los datos
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -69,6 +77,10 @@ export const registrarPrecio = async (req, res) => {
 // Eliminar un precio
 export const eliminarPrecio = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     let idPrecio = req.params.idPrecio;
 
     let sql = `DELETE FROM precio WHERE idPrecio = ?`;
@@ -89,6 +101,10 @@ export const eliminarPrecio = async (req, res) => {
 // Actualizar un precio
 export const actualizarPrecio = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     let idPrecio = req.params.idPrecio;
     let { presentacion, precio, fk_idTipoServicio } = req.body;
 
@@ -133,6 +149,10 @@ export const actualizarEstado = async (req, res) => {
 // Listar precio por ID
 export const ListaridPrecio = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     let idPrecio = req.params.idPrecio;
 
     let sql = `SELECT * FROM precio WHERE idPrecio = ?`;

@@ -3,6 +3,10 @@ import { validationResult } from "express-validator"
 
 export const listarfincas = async (req, res) => {
     try{
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         let sql = 'select * from finca'
         const [result] = await conexion.query(sql)
         console.log(result.length)
@@ -49,6 +53,10 @@ export const registrarFincas = async (req, res) => {
 
 export const actualizarFincas = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         let id_finca = req.params.id_finca;
         let { nombre_finca, vereda, fk_id_municipio } = req.body;
 
@@ -77,6 +85,10 @@ export const actualizarFincas = async (req, res) => {
 
 export const ListaridFincas=async(req,res)=>{
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         let id_finca=req.params.id_finca
         let sql=`select * from finca where id_finca=${id_finca}`
         const [responde]= await conexion.query(sql)
@@ -95,6 +107,10 @@ export const ListaridFincas=async(req,res)=>{
 
     export const eliminarfincas = async (req, res) => {
         try {
+            const error = validationResult(req);
+            if (!error.isEmpty()) {
+              return res.status(400).json(error);
+            }
             let id_finca = req.params.id_finca
     
             let sql = `delete from finca where id_finca = ${id_finca}`

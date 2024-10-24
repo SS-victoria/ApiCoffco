@@ -141,6 +141,10 @@ export const ActualizarVariables = async (req, res) => {
 
 export const ELiminarVariables = async (req, res) => {
   try {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json(error);
+    }
     let id = req.params.id;
 
     let sql = `delete from variables where idVariable=?`;

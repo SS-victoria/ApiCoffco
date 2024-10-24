@@ -39,6 +39,10 @@ ORDER BY
 
 export const EstadisticasAlquiler = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         let slq = `SELECT 
     DATE_FORMAT(fecha, '%Y-%m') AS fecha, 
     COUNT(*) AS cantidad_servicios

@@ -1,7 +1,11 @@
 import { conexion } from "../database/conexion.js";
-
+import { validationResult } from "express-validator";
 export const listarLogos = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         let sql = "SELECT * FROM logos";
         const [response] = await conexion.query(sql)
         if (response.length > 0) {
@@ -16,6 +20,10 @@ export const listarLogos = async (req, res) => {
 
 export const registrarLogo = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         let { nombre } = req.body;
         const ruta = req.file.originalname;
         let sql = "INSERT INTO logos (ruta,nombre) VALUES (?,?)";
@@ -32,6 +40,10 @@ export const registrarLogo = async (req, res) => {
 
 export const actualizarLogo = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         const id = req.params.id;
         const { nombre } = req.body;
         let ruta;
@@ -59,6 +71,10 @@ export const actualizarLogo = async (req, res) => {
 
 export const estadoLogo = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         const { id } = req.params;
 
         let selectSql = `
@@ -92,6 +108,10 @@ export const estadoLogo = async (req, res) => {
 
 export const eliminarLogo = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         let id = req.params.id;
         let sql = "DELETE FROM logos WHERE id=?";
         const [response] = await conexion.query(sql, [id]);
@@ -107,6 +127,10 @@ export const eliminarLogo = async (req, res) => {
 
 export const buscarLogo = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         let id = req.params.id;
         let sql = "SELECT * FROM logos WHERE id=?";
         const [response] = await conexion.query(sql, [id]);
@@ -121,6 +145,10 @@ export const buscarLogo = async (req, res) => {
 }
 export const logosActivos = async (req, res) => {
     try {
+        const error = validationResult(req);
+        if (!error.isEmpty()) {
+          return res.status(400).json(error);
+        }
         let sql = "SELECT * FROM logos WHERE estado='activo'";
         const [response] = await conexion.query(sql);
         if (response.length > 0) {
